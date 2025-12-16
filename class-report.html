@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>学品教育学院 - 课堂表现报告</title>
+  <style>
+    :root{
+      --bg:#f7f5eb;
+      --card:#fffaf0;
+      --line:#f0e4c2;
+      --line2:#e6d7b0;
+      --text:#444;
+      --muted:#777;
+      --brand:#b4761c;
+      --brand2:#7a4f10;
+      --btn:#f2b235;
+      --btn2:#ddd0a9;
+      --focus:#e3b04b;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Microsoft YaHei",sans-serif;
+      background:var(--bg);
+      margin:0;
+      padding:0;
+      color:var(--text);
+    }
+
+    .container{
+      max-width:1000px;
+      margin:20px auto;
+      background:#fff;
+      padding:20px;
+      border-radius:14px;
+      box-shadow:0 4px 16px rgba(0,0,0,.08);
+    }
+
+    .page-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding-bottom:12px;
+      border-bottom:2px solid var(--line);
+      margin-bottom:16px;
+    }
+    .page-header-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .page-logo{
+      width:54px;
+      height:54px;
+      border-radius:12px;
+      background:#fff;
+      border:1px solid var(--line2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .page-logo img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+    .page-title{
+      margin:0;
+      font-size:18px;
+      font-weight:800;
+      color:var(--brand2);
+      line-height:1.15;
+    }
+    .page-sub{
+      margin:3px 0 0;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap:18px;
+      margin-top:14px;
+    }
+    @media (max-width: 860px){
+      .form-grid{ grid-template-columns:1fr; }
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line2);
+      border-radius:12px;
+      padding:16px;
+    }
+
+    .card h2{
+      font-size:15px;
+      margin:0 0 10px;
+      color:var(--brand);
+      font-weight:800;
+    }
+
+    .field{ margin-bottom:10px; }
+    label{
+      display:block;
+      font-size:14px;
+      margin-bottom:4px;
+      color:#555;
+      font-weight:600;
+    }
+
+    input[type="text"], select, textarea{
+      width:100%;
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px solid #ddd0a9;
+      outline:none;
+      background:#fffdf7;
+      font-size:14px;
+    }
+    textarea{ min-height:100px; resize:vertical; }
+
+    input[type="text"]:focus, select:focus, textarea:focus{
+      border-color:var(--focus);
+      box-shadow:0 0 0 2px rgba(227,176,75,.2);
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .row > div{ flex:1; min-width:180px; }
+
+    .radio-row, .check-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      font-size:13px;
+      color:#444;
+    }
+    .radio-row label, .check-row label{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      margin:0;
+      font-weight:500;
+      white-space:nowrap;
+    }
+
+    .hint{
+      font-size:12px;
+      color:#8c8c8c;
+      margin-top:4px;
+    }
+
+    .btn-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+    button{
+      border:none;
+      border-radius:999px;
+      padding:8px 14px;
+      font-size:13px;
+      cursor:pointer;
+      background:var(--btn);
+      color:#fff;
+      font-weight:800;
+      letter-spacing:.3px;
+    }
+    button.secondary{
+      background:var(--btn2);
+      color:#555;
+    }
+    button:hover{ filter:brightness(1.04); }
+
+    .report-wrap{
+      background:#fffdf6;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .report-toolbar{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .report-header{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      background:#fffaf0;
+      border-radius:12px;
+      margin-bottom:12px;
+    }
+
+    .report-logo{
+      width:58px;
+      height:58px;
+      border-radius:12px;
+      border:1px solid var(--line2);
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .report-logo img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .report-title{
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+      line-height:1.1;
+    }
+    .report-title .main{
+      font-size:16px;
+      font-weight:900;
+      color:var(--brand2);
+    }
+    .report-title .sub{
+      font-size:14px;
+      font-weight:800;
+      color:var(--brand);
+    }
+
+    .section{
+      padding:10px 10px;
+      border-radius:12px;
+      background:#fff;
+      border:1px solid var(--line);
+      margin-bottom:10px;
+    }
+    .section .sec-title{
+      font-weight:900;
+      color:var(--brand2);
+      margin-bottom:8px;
+      font-size:13px;
+    }
+
+    .kv{
+      font-size:13px;
+      color:#555;
+      line-height:1.7;
+    }
+    .kv b{
+      color:#8d6115;
+      font-weight:900;
+    }
+
+    .comment-box{
+      font-size:13px;
+      line-height:1.75;
+      color:#444;
+      white-space:pre-wrap;
+    }
+
+    .photo-row{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .photo-row img{
+      width:150px;
+      height:180px;
+      object-fit:cover;
+      border-radius:12px;
+      border:1px solid var(--line2);
+      background:#fff;
+      display:none;
+    }
+
+    .slogan{
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px dashed var(--line2);
+      text-align:center;
+      color:var(--brand);
+      font-weight:900;
+      font-size:13px;
+    }
+
+    body.screenshot-mode .page-header{ display:none; }
+    body.screenshot-mode .form-grid{
+      grid-template-columns:1fr;
+    }
+    body.screenshot-mode .form-grid > .card:first-child{
+      display:none;
+    }
+    body.screenshot-mode .container{
+      box-shadow:none;
+      margin:0 auto;
+      border-radius:0;
+      max-width:900px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="page-logo">
+          <img src="xp-logo.png" alt="学品教育学院 Logo">
+        </div>
+        <div>
+          <h1 class="page-title">课堂表现报告制作（老师填写）</h1>
+          <p class="page-sub">填写后右侧会生成可直接截图发家长的报告。</p>
+        </div>
+      </div>
+      <button type="button" class="secondary" onclick="toggleScreenshotMode()">家长截图模式</button>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="card">
+        <h2>✏️ 老师填写</h2>
+
+        <div class="field">
+          <label for="studentName">学生名字：</label>
+          <input type="text" id="studentName" placeholder="请输入学生名字">
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="grade">年级：</label>
+            <select id="grade">
+              <option value="">请选择年级</option>
+              <option value="K2">K2</option>
+              <option value="Y1">Y1</option>
+              <option value="Y2">Y2</option>
+              <option value="Y3">Y3</option>
+              <option value="Y4">Y4</option>
+              <option value="Y5">Y5</option>
+              <option value="Y6">Y6</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="subject">科目：</label>
+            <select id="subject">
+              <option value="">请选择科目</option>
+              <option value="国文理解">国文理解</option>
+              <option value="国文作文">国文作文</option>
+              <option value="英文理解">英文理解</option>
+              <option value="英文作文">英文作文</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="teacher">老师：</label>
+          <select id="teacher">
+            <option value="">请选择老师</option>
+            <option value="孔老师">孔老师</option>
+            <option value="Candy老师">Candy老师</option>
+            <option value="Chloe老师">Chloe老师</option>
+            <option value="陈老师">陈老师</option>
+            <option value="李老师">李老师</option>
+            <option value="王老师">王老师</option>
+            <option value="Lucas老师">Lucas老师</option>
+            <option value="Cherry老师">Cherry老师</option>
+            <option value="晶老师">晶老师</option>
+          </select>
+        </div>
+
+        <hr style="border:none;border-top:1px dashed var(--line2);margin:10px 0 12px;">
+
+        <div class="field">
+          <label>课堂表现 · 字体：</label>
+          <div class="radio-row">
+            <label><input type="radio" name="font" value="端正">端正</label>
+            <label><input type="radio" name="font" value="中等">中等</label>
+            <label><input type="radio" name="font" value="潦草">潦草</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>课堂表现 · 专心度：</label>
+          <div class="radio-row">
+            <label><input type="radio" name="focus" value="认真听课">认真听课</label>
+            <label><input type="radio" name="focus" value="偶尔发呆">偶尔发呆</label>
+            <label><input type="radio" name="focus" value="不专心">不专心</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>班上表现（可多选）：</label>
+          <div class="check-row">
+            <label><input type="checkbox" name="behaviour" value="文静">文静</label>
+            <label><input type="checkbox" name="behaviour" value="多话">多话</label>
+            <label><input type="checkbox" name="behaviour" value="积极回答">积极回答</label>
+            <label><input type="checkbox" name="behaviour" value="被动学习">被动学习</label>
+          </div>
+          <div class="hint">建议至少勾选 1 项，让家长更清楚孩子的课堂状态。</div>
+        </div>
+
+        <hr style="border:none;border-top:1px dashed var(--line2);margin:10px 0 12px;">
+
+        <div class="field">
+          <label for="comment">老师留言（可自动生成）：</label>
+          <textarea id="comment" placeholder="可点击下方按钮自动生成，或自行编辑。"></textarea>
+          <div class="btn-row">
+            <button type="button" onclick="generateComment()">自动生成老师留言</button>
+            <button type="button" class="secondary" onclick="clearComment()">清空留言</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="photo">上传学生照片：</label>
+          <input type="file" id="photo" accept="image/*">
+          <div class="hint">上传后会显示在右侧报告里，让报告更有温度 💛</div>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" onclick="updateReport()">更新右侧报告</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="report-wrap" id="reportArea">
+
+          <div class="report-toolbar">
+            <button type="button" class="secondary" onclick="toggleScreenshotMode()">家长截图模式</button>
+          </div>
+
+          <div class="report-header">
+            <div class="report-logo">
+              <img src="xp-logo.png" alt="学品教育学院 Logo">
+            </div>
+            <div class="report-title">
+              <div class="main">学品教育学院</div>
+              <div class="sub">课堂表现报告</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="sec-title">基本资料</div>
+            <div class="kv">
+              <b>学生：</b><span id="r-student">——</span><br>
+              <b>年级：</b><span id="r-grade">——</span><br>
+              <b>科目：</b><span id="r-subject">——</span><br>
+              <b>任课老师：</b><span id="r-teacher">——</span>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="sec-title">课堂表现</div>
+            <div class="kv">
+              <b>字体：</b><span id="r-font">——</span><br>
+              <b>专心度：</b><span id="r-focus">——</span><br>
+              <b>班上表现：</b><span id="r-behaviour">——</span>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="sec-title">老师留言</div>
+            <div class="comment-box" id="r-comment">（老师留言将显示在这里）</div>
+          </div>
+
+          <div class="section">
+            <div class="sec-title">学生照片</div>
+            <div class="photo-row">
+              <img id="r-photo" alt="">
+            </div>
+          </div>
+
+          <div class="slogan">
+            学品教育学院 百万镇第一名的补习学院 注重孩子们的学习进度
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function getSelectedRadio(name){
+      const el = document.querySelector('input[name="' + name + '"]:checked');
+      return el ? el.value : "";
+    }
+    function getCheckedValues(name){
+      return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(x => x.value);
+    }
+    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+    function generateComment(){
+      const student = (document.getElementById("studentName").value.trim() || "孩子");
+      const grade = document.getElementById("grade").value.trim();
+      const subject = (document.getElementById("subject").value.trim() || "课堂");
+      const font = getSelectedRadio("font");
+      const focus = getSelectedRadio("focus");
+      const behaviours = getCheckedValues("behaviour");
+
+      const open_good = [
+        `${grade ? grade + "的" : ""}${student}在${subject}的学习态度良好，整体表现不错。`,
+        `${student}在${subject}课上投入度佳，老师看见孩子的努力。`,
+        `在${subject}方面，${student}整体表现稳定，学习态度值得肯定。`
+      ];
+      const open_neutral = [
+        `${grade ? grade + "的" : ""}${student}在${subject}方面还有提升空间，老师会继续陪伴引导。`,
+        `${student}在${subject}课堂上的表现中规中矩，若能再调整学习习惯会更好。`,
+        `在${subject}学习上，${student}需要再多一点稳定与专注。`
+      ];
+
+      let opening = (focus === "认真听课") ? pick(open_good) : pick(open_neutral);
+
+      let focusSentence = "";
+      if (focus === "认真听课"){
+        focusSentence = pick([
+          `上课时能够专心聆听与跟上教学节奏，完成任务也较到位。`,
+          `课堂上大部分时间都能保持专注，对老师提问也有留意。`,
+          `能够专心听课，并愿意配合老师的课堂安排。`
+        ]);
+      } else if (focus === "偶尔发呆"){
+        focusSentence = pick([
+          `上课时偶尔会分心或发呆，需要老师适时提醒。`,
+          `注意力有时会飘走，若能再专注一点，学习效果会更好。`,
+          `课堂专注度时好时坏，建议继续加强专注习惯。`
+        ]);
+      } else if (focus === "不专心"){
+        focusSentence = pick([
+          `目前课堂专注度偏低，较容易分心，建议加强自律与听课习惯。`,
+          `上课时常出现不专心的情况，影响学习吸收，老师会继续引导改善。`,
+          `课堂上较难持续专注，若能先把心思放在学习上，进步会更明显。`
+        ]);
+      } else {
+        focusSentence = `课堂专注度尚未选择，老师建议持续培养专注听课的习惯。`;
+      }
+
+      let fontSentence = "";
+      if (font === "端正"){
+        fontSentence = pick([
+          `书写字体端正清晰，是很好的学习习惯，请继续保持。`,
+          `写字整齐易读，能帮助检查作业与建立良好学习态度。`,
+          `字体工整，细节做得不错，值得称赞。`
+        ]);
+      } else if (font === "中等"){
+        fontSentence = pick([
+          `书写基本清楚，若能放慢速度并注意间距，会更整齐美观。`,
+          `字体属于中等水平，建议再加强笔画清晰与整齐度。`,
+          `写字尚可，如更有耐心地书写，整体会更好看。`
+        ]);
+      } else if (font === "潦草"){
+        fontSentence = pick([
+          `书写较潦草，建议放慢速度，把每个字写完整写清楚。`,
+          `字体略显凌乱，希望孩子多练习书写并提升整齐度。`,
+          `写字习惯需要加强，若更专心书写，会让作业更清晰。`
+        ]);
+      } else {
+        fontSentence = `书写表现尚未选择，老师建议继续培养认真书写的习惯。`;
+      }
+
+      let behaviourSentence = "";
+      if (behaviours.length){
+        const list = behaviours.join("、");
+        let extra = "";
+        if (behaviours.includes("积极回答")) extra += "愿意举手回答，表达能力不错；";
+        if (behaviours.includes("文静")) extra += "性格较文静，建议多开口发问与分享；";
+        if (behaviours.includes("多话")) extra += "有时会和同学聊天，需提醒在课堂保持专注；";
+        if (behaviours.includes("被动学习")) extra += "课堂参与度偏被动，需要更多鼓励与带动；";
+
+        behaviourSentence = `在班上的表现偏向「${list}」，${extra ? "老师观察到：" + extra : ""}`;
+      }
+
+      let closing = "";
+      if (focus === "认真听课" && !behaviours.includes("被动学习")){
+        closing = pick([
+          `只要继续保持这样的态度并多做练习，相信会有更亮眼的进步。`,
+          `老师会继续鼓励与陪伴，期待孩子越来越稳定、越来越自信。`,
+          `继续保持认真学习的节奏，成果一定会越来越好。`
+        ]);
+      } else {
+        closing = pick([
+          `只要愿意一步一步调整习惯，在老师和家长的陪伴下，孩子一定可以越学越好。`,
+          `老师会继续耐心引导，也欢迎家长在家一起配合，帮助孩子建立更好的学习习惯。`,
+          `希望接下来孩子多一点专注与勇气，相信孩子有能力做得更好。`
+        ]);
+      }
+
+      const full = [opening, focusSentence, fontSentence, behaviourSentence, closing].filter(Boolean).join(" ");
+      document.getElementById("comment").value = full;
+      updateReport();
+    }
+
+    function clearComment(){
+      document.getElementById("comment").value = "";
+      document.getElementById("r-comment").innerText = "（老师留言将显示在这里）";
+    }
+
+    function updateReport(){
+      const student = document.getElementById("studentName").value.trim() || "——";
+      const grade = document.getElementById("grade").value || "——";
+      const subject = document.getElementById("subject").value || "——";
+      const teacher = document.getElementById("teacher").value || "——";
+
+      const font = getSelectedRadio("font") || "——";
+      const focus = getSelectedRadio("focus") || "——";
+      const behaviours = getCheckedValues("behaviour");
+      const behaviourText = behaviours.length ? behaviours.join("、") : "——";
+
+      const comment = document.getElementById("comment").value.trim() || "（老师留言将显示在这里）";
+
+      document.getElementById("r-student").innerText = student;
+      document.getElementById("r-grade").innerText = grade;
+      document.getElementById("r-subject").innerText = subject;
+      document.getElementById("r-teacher").innerText = teacher;
+
+      document.getElementById("r-font").innerText = font;
+      document.getElementById("r-focus").innerText = focus;
+      document.getElementById("r-behaviour").innerText = behaviourText;
+
+      document.getElementById("r-comment").innerText = comment;
+    }
+
+    document.getElementById("photo").addEventListener("change", function(e){
+      const file = e.target.files[0];
+      const img = document.getElementById("r-photo");
+      if(!file){
+        img.style.display="none";
+        img.src="";
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        img.src = ev.target.result;
+        img.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function toggleScreenshotMode(){
+      document.body.classList.toggle("screenshot-mode");
+    }
+  </script>
+</body>
+</html>
